@@ -1,0 +1,109 @@
+# Default configuration for cutin synthase stabilization project
+
+# Structure settings
+structure:
+  input_pdb: "data/raw/cutin_synthase.pdb"
+  cleaned_pdb: "data/processed/cutin_synthase_clean.pdb"
+
+# Mutation screening settings
+mutation_screening:
+  strategies:
+    - proline_introduction
+    - salt_bridges
+    - hydrophobic_packing
+    - disulfide_bonds
+    - glycine_replacement
+  
+  surface_threshold: 20.0  # % SASA for surface residues
+  bfactor_threshold: 50.0  # High B-factor cutoff for flexible regions
+  
+  # Positions to exclude (e.g., active site residues)
+  excluded_positions: []
+
+# MD simulation settings
+md_simulation:
+  force_field: "amber99sb-ildn"
+  water_model: "tip3p"
+  box_type: "dodecahedron"
+  box_distance: 1.0  # nm from protein
+  
+  ions:
+    concentration: 0.15  # M (NaCl)
+  
+  temperature:
+    value: 300  # K
+    variants:
+      - 300  # Room temperature
+      - 323  # Elevated (50°C)
+      - 343  # High (70°C)
+  
+  pressure: 1.0  # bar
+  
+  simulation_protocol:
+    minimization:
+      steps: 50000
+      emtol: 1000.0
+    
+    equilibration:
+      nvt_time: 1.0  # ns
+      npt_time: 1.0  # ns
+    
+    production:
+      time: 100.0  # ns
+      timestep: 2.0  # fs
+      output_freq: 10000  # steps (every 20 ps)
+  
+  # Number of independent replicates
+  replicates: 3
+
+# Analysis settings
+analysis:
+  trajectory:
+    skip_frames: 1  # Use every frame
+    align_selection: "backbone"
+  
+  metrics:
+    - rmsd
+    - rmsf
+    - radius_of_gyration
+    - sasa
+    - secondary_structure
+    - hydrogen_bonds
+  
+  descriptors:
+    - aliphatic_index
+    - instability_index
+    - gravy
+    - charge_distribution
+    - aromatic_interactions
+    - salt_bridges
+    - proline_content
+  
+  visualization:
+    formats:
+      - png
+      - pdf
+    dpi: 300
+
+# Output settings
+output:
+  results_dir: "data/results"
+  figures_dir: "data/results/figures"
+  reports_dir: "data/results/reports"
+  
+  # Report formats
+  report_formats:
+    - markdown
+    - html
+    - pdf
+
+# Computational resources
+resources:
+  n_cores: 8
+  gpu: false
+  memory_gb: 16
+
+# Logging
+logging:
+  level: "INFO"
+  file: "workflow.log"
