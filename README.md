@@ -1,6 +1,8 @@
 # Computational Redesign of Cutinase for Enhanced Thermostability
 
-This repository documents the *in silico* workflow to improve the thermostability of a cutinase enzyme, starting from a structure predicted by AlphaFold3. The goal is to identify key point mutations for future experimental validation, building upon work from a Master's thesis project.
+This repository documents a self-driven project focused on improving the thermostability of a cutinase enzyme. It serves as a computational continuation of my largely experimental Master's thesis, initiated to personally deepen my skills in bioinformatics and protein design.
+
+The workflow begins with a structure predicted by AlphaFold3 and aims to identify key point mutations for future experimental validation.
 
 ## Project Goal
 
